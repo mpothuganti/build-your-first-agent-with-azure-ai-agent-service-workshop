@@ -18,10 +18,6 @@ This workshop demonstrated how to leverage the Foundry Agent Service to create a
 
 - The agent can create downloadable files, including Excel, CSV, JSON, and image formats, providing users with flexible options to analyze and share data.
 
-## 5. Grounding with Bing
-
-- By integrating Bing search, the agent can perform grounded searches for competitive product analysis, expanding its insights beyond internal data sources.
-
 ## 6. Security Best Practices
 
 - Security risks, such as SQL injection, are mitigated by enforcing read-only database access and running the app within a secure environment.

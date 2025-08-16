@@ -183,17 +183,6 @@ Next, we log in to Azure AI Foundry to retrieve the project endpoint, which the 
         dotnet user-secrets set "Azure:ModelName" "gpt-4o-mini"
         ```
 
-    4. Add the **Bing connection ID** to the user secrets for grounding with Bing search.
-
-        ```powershell
-        $subId = $(az account show --query id --output tsv)
-        $rgName = "rg-agent-workshop"
-        $aiAccount = "<ai_account_name>" # Replace with the actual AI account name
-        $aiProject = "<ai_project_name>" # Replace with the actual AI project name
-        $bingConnectionId = "/subscriptions/$subId/resourceGroups/$rgName/providers/Microsoft.CognitiveServices/accounts/$aiAccount/projects/$aiProject/connections/groundingwithbingsearch"
-        dotnet user-secrets set "Azure:BingConnectionId" "$bingConnectionId"
-        ```
-
     ## Project Structure
 
     Be sure to familiarize yourself with the key **subfolders** and **files** you’ll be working with throughout the workshop.
