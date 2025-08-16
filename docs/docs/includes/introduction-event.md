@@ -114,10 +114,7 @@ Next, we log in to Azure AI Foundry to retrieve the project endpoint, which the 
     ![Azure credentials](../media/azure-credentials.png){:width="500"}
 3. Read the introduction to the Azure AI Foundry and click **Got it**.
 4. Navigate to [All Resources](https://ai.azure.com/AllResources){:target="_blank"} to view the list of AI resources that have been pre-provisioned for you.
-5. Select the resource name that starts with **aip-** of type **Project**.
-
-    ![Select project](../media/ai-foundry-project.png){:width="500"}
-
+5. Select the resource name that starts with **prj-zava-agent-wks-nnnn**.
 6. Review the introduction guide and click **Close**.
 7. From the **Overview** sidebar menu, locate the **Endpoints and keys** -> **Libraries** -> **Azure AI Foundry** section, click the **Copy** icon to copy the **Azure AI Foundry project endpoint**.
 

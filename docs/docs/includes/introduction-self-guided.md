@@ -80,17 +80,15 @@ You need to authenticate with Azure so the agent app can access the Azure AI Age
 
 ## Deploy the Azure Resources
 
-The following resources will be created in the **rg-agent-workshop-****** resource group in your Azure subscription.
+The following resources will be created in the **rg-contoso-agent-workshop-nnnn** resource group in your Azure subscription.
 
-- An **Azure AI Foundry hub** named **foundry-******
-- An **Azure AI Foundry project** named **project-******
-- A **Serverless (pay-as-you-go) GPT-4o model deployment** named **gpt-4o-mini**. See pricing details [here](https://azure.microsoft.com/pricing/details/cognitive-services/openai-service/){:target="_blank"}.
+- An **Azure AI Foundry hub** named **fdy-contoso-agent-nnnn**
+- An **Azure AI Foundry project** named **prj-contoso-agent-nnnn**
+- A **Serverless (pay-as-you-go) GPT-4o-mini model deployment** named **gpt-4o-mini**. See pricing details [here](https://azure.microsoft.com/pricing/details/cognitive-services/openai-service/){:target="_blank"}.
 
-!!! warning "You will need 140K TPM quota availability for the gpt-4o-mini Global Standard SKU, not because the agent uses lots of tokens, but due to the frequency of calls made by the agent to the model. Review your quota availability in the [AI Foundry Management Center](https://ai.azure.com/managementCenter/quota){:target="_blank"}."
+!!! warning "You will need 120K TPM quota availability for the gpt-4o-mini Global Standard SKU, not because the agent uses lots of tokens, but due to the frequency of calls made by the agent to the model. Review your quota availability in the [AI Foundry Management Center](https://ai.azure.com/managementCenter/quota){:target="_blank"}."
 
 We have provided a bash script to automate the deployment of the resources required for the workshop.
-
-=== "Automated deployment"
 
 The script `deploy.sh` deploys to the `westus` region by default; edit the file to change the region or resource names. To run the script, open the VS Code terminal and run the following command:
 
