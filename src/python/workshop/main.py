@@ -1,6 +1,5 @@
 import asyncio
 import logging
-import os
 
 from azure.ai.agents.aio import AgentsClient
 from azure.ai.agents.models import (
@@ -8,13 +7,13 @@ from azure.ai.agents.models import (
     AgentThread,
     AsyncFunctionTool,
     AsyncToolSet,
-    BingGroundingTool,
     CodeInterpreterTool,
     FileSearchTool,
 )
 from azure.identity.aio import DefaultAzureCredential
-from dotenv import load_dotenv
 
+
+from config import Config
 from sales_data import SalesData
 from stream_event_handler import StreamEventHandler
 from terminal_colors import TerminalColors as tc
@@ -23,19 +22,6 @@ from utilities import Utilities
 logging.basicConfig(level=logging.ERROR)
 logger = logging.getLogger(__name__)
 
-load_dotenv()
-
-AGENT_NAME = "Contoso Sales Agent"
-TENTS_DATA_SHEET_FILE = "datasheet/contoso-tents-datasheet.pdf"
-FONTS_ZIP = "fonts/fonts.zip"
-API_DEPLOYMENT_NAME = os.getenv("MODEL_DEPLOYMENT_NAME")
-PROJECT_ENDPOINT = os.environ["PROJECT_ENDPOINT"]
-MAX_COMPLETION_TOKENS = 10240
-MAX_PROMPT_TOKENS = 20480
-# The LLM is used to generate the SQL queries.
-# Set the temperature and top_p low to get more deterministic results.
-TEMPERATURE = 0.1
-TOP_P = 0.1
 INSTRUCTIONS_FILE = None
 
 
@@ -46,7 +32,7 @@ sales_data = SalesData(utilities)
 
 agents_client = AgentsClient(
     credential=DefaultAzureCredential(),
-    endpoint=PROJECT_ENDPOINT,
+    endpoint=Config.PROJECT_ENDPOINT,
 )
 
 functions = AsyncFunctionTool(
@@ -94,7 +80,7 @@ async def initialize() -> tuple[Agent | None, AgentThread | None]:
     if not INSTRUCTIONS_FILE:
         return None, None
 
-    if not API_DEPLOYMENT_NAME:
+    if not Config.API_DEPLOYMENT_NAME:
         logger.error("MODEL_DEPLOYMENT_NAME environment variable is not set")
         return None, None
 
@@ -116,11 +102,11 @@ async def initialize() -> tuple[Agent | None, AgentThread | None]:
 
         print("Creating agent...")
         agent = await agents_client.create_agent(
-            model=API_DEPLOYMENT_NAME,
-            name=AGENT_NAME,
+            model=Config.API_DEPLOYMENT_NAME,
+            name=Config.AGENT_NAME,
             instructions=instructions,
             toolset=toolset,
-            temperature=TEMPERATURE,
+            temperature=Config.TEMPERATURE,
         )
         print(f"Created agent, ID: {agent.id}")
 
@@ -163,10 +149,10 @@ async def post_message(thread_id: str, content: str, agent: Agent, thread: Agent
             agent_id=agent.id,
             event_handler=StreamEventHandler(
                 functions=functions, agent_client=agents_client, utilities=utilities),
-            max_completion_tokens=MAX_COMPLETION_TOKENS,
-            max_prompt_tokens=MAX_PROMPT_TOKENS,
-            temperature=TEMPERATURE,
-            top_p=TOP_P,
+            max_completion_tokens=Config.MAX_COMPLETION_TOKENS,
+            max_prompt_tokens=Config.MAX_PROMPT_TOKENS,
+            temperature=Config.TEMPERATURE,
+            top_p=Config.TOP_P,
             # instructions=agent.instructions,
         ) as stream:
             await stream.until_done()
