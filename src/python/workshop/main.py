@@ -30,7 +30,6 @@ TENTS_DATA_SHEET_FILE = "datasheet/contoso-tents-datasheet.pdf"
 FONTS_ZIP = "fonts/fonts.zip"
 API_DEPLOYMENT_NAME = os.getenv("MODEL_DEPLOYMENT_NAME")
 PROJECT_ENDPOINT = os.environ["PROJECT_ENDPOINT"]
-AZURE_BING_CONNECTION_ID = os.environ["AZURE_BING_CONNECTION_ID"]
 MAX_COMPLETION_TOKENS = 10240
 MAX_PROMPT_TOKENS = 20480
 # The LLM is used to generate the SQL queries.

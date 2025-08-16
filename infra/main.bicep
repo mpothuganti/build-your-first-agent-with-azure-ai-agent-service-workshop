@@ -2,7 +2,7 @@ targetScope = 'subscription'
 
 // Parameters
 @description('Prefix for the resource group and resources')
-param resourcePrefix string = 'agent-workshop'
+param resourcePrefix string = 'contoso-agent-workshop'
 
 @description('Location of the resource group to create or use for the deployment')
 param location string = 'eastus'
@@ -33,8 +33,8 @@ param modelCapacity int = 140
 
 @description('Unique suffix for the resources')
 @maxLength(4)
-@minLength(0)
-param uniqueSuffix string = substring(uniqueString(subscription().id, resourcePrefix), 0, 4)
+@minLength(4)
+param uniqueSuffix string
 
 var resourceGroupName = toLower('rg-${resourcePrefix}-${uniqueSuffix}')
 
@@ -51,8 +51,8 @@ resource rg 'Microsoft.Resources/resourceGroups@2024-11-01' = {
 }
 
 // Calculate the unique suffix
-var aiProjectName = toLower('project-${uniqueSuffix}')
-var foundryResourceName = toLower('foundry-${uniqueSuffix}')
+var aiProjectName = toLower('prj-contoso-agent-${uniqueSuffix}')
+var foundryResourceName = toLower('fdy-contoso-agent-${uniqueSuffix}')
 
 module foundry 'foundry.bicep' = {
   name: 'foundry-account-deployment'

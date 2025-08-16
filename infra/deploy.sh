@@ -5,21 +5,31 @@ echo "Deploying the Azure resources..."
 # Define resource group parameters
 RG_LOCATION="westus"
 MODEL_NAME="gpt-4o-mini"
-MODEL_VERSION="2024-11-20"
-AI_PROJECT_FRIENDLY_NAME="Agent Service Workshop"
+MODEL_VERSION="2024-07-18"
+AI_PROJECT_FRIENDLY_NAME="Contoso Agent Service Workshop"
 MODEL_CAPACITY=120
+
+# Generate a unique suffix (4 character random string)
+UNIQUE_SUFFIX=$(printf "%04d" $((RANDOM % 10000)))
+DEPLOYMENT_NAME="azure-ai-agent-service-lab-${UNIQUE_SUFFIX}"
+
+# Print the resource group name that will be created
+RESOURCE_GROUP_NAME="rg-contoso-agent-workshop-${UNIQUE_SUFFIX}"
+echo "Resource group that will be created: $RESOURCE_GROUP_NAME"
 
 # Deploy the Azure resources and save output to JSON
 az deployment sub create \
-  --name "azure-ai-agent-service-lab" \
+  --name "$DEPLOYMENT_NAME" \
   --location "$RG_LOCATION" \
   --template-file main.bicep \
   --parameters \
+      uniqueSuffix="$UNIQUE_SUFFIX" \
+      resourcePrefix="contoso-agent-workshop" \
+      location="$RG_LOCATION" \
       aiProjectFriendlyName="$AI_PROJECT_FRIENDLY_NAME" \
       modelName="$MODEL_NAME" \
       modelCapacity="$MODEL_CAPACITY" \
-      modelVersion="$MODEL_VERSION" \
-      location="$RG_LOCATION" > output.json
+      modelVersion="$MODEL_VERSION" > output.json
 
 # Parse the JSON file manually using grep and sed
 if [ ! -f output.json ]; then
@@ -65,7 +75,7 @@ echo "Adding Azure AI Developer user role"
 subId=$(az account show --query id --output tsv)
 objectId=$(az ad signed-in-user show --query id -o tsv)
 
-az role assignment create --role "f6c7c914-8db3-469d-8ca1-694a8f32e121" \
+az role assignment create --role "Azure AI Developer" \
                           --assignee-object-id "$objectId" \
                           --scope "subscriptions/$subId/resourceGroups/$RESOURCE_GROUP_NAME" \
                           --assignee-principal-type 'User'
