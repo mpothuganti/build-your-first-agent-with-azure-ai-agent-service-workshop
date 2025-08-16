@@ -2,7 +2,7 @@
 
 Select your workshop experience:
 
-=== "@Build Workshop"
+=== "@Skillable Workshop"
 
     {% include-markdown "includes/introduction-event.md" %}
 
