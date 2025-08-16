@@ -85,10 +85,6 @@ Available fonts in the `/mnt/data/fonts/fonts` folder are:
 
 ---
 
-### 4. Competitive Insights for Products and Categories Tool
-
-Use the **Grounding with Bing Search tool** to provide competitive insights relevant to Contoso’s business.
-
 - You may return:
   - **Product names**
   - **Company names**
