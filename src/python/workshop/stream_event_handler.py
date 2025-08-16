@@ -1,6 +1,6 @@
 from typing import Any
 
-from azure.ai.projects.aio import AIProjectClient
+from azure.ai.agents.aio import AgentsClient
 from azure.ai.agents.models import (
     AsyncAgentEventHandler,
     AsyncFunctionTool,
@@ -20,9 +20,9 @@ from utilities import Utilities
 class StreamEventHandler(AsyncAgentEventHandler[str]):
     """Handle LLM streaming events and tokens."""
 
-    def __init__(self, functions: AsyncFunctionTool, project_client: AIProjectClient, utilities: Utilities) -> None:
+    def __init__(self, functions: AsyncFunctionTool, agent_client: AgentsClient, utilities: Utilities) -> None:
         self.functions = functions
-        self.project_client = project_client
+        self.agent_client = agent_client
         self.util = utilities
         super().__init__()
 
@@ -37,7 +37,7 @@ class StreamEventHandler(AsyncAgentEventHandler[str]):
         #     print()
         # self.util.log_msg_purple(f"ThreadMessage created. ID: {message.id}, " f"Status: {message.status}")
 
-        await self.util.get_files(message, self.project_client)
+        await self.util.get_files(message, self.agent_client)
 
     async def on_thread_run(self, run: ThreadRun) -> None:
         """Handle thread run events"""

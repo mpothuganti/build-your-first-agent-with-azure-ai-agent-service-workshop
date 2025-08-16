@@ -38,7 +38,7 @@ Once the task is complete, the pie chart image will be saved in the **shared/fil
         ```python
         INSTRUCTIONS_FILE = "instructions/code_interpreter_multilingual.txt"
 
-        font_file_info = await utilities.upload_file(project_client, utilities.shared_files_path / FONTS_ZIP)
+        font_file_info = await utilities.upload_file(agent_client, utilities.shared_files_path / FONTS_ZIP)
         code_interpreter.add_file(file_id=font_file_info.id)
         ```
 

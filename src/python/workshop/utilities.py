@@ -53,31 +53,32 @@ class Utilities:
 
         self.log_msg_green(f"File saved to {file_path}")
 
-    async def get_files(self, message: ThreadMessage, project_client: AgentsClient) -> None:
+    async def get_files(self, message: ThreadMessage, agent_client: AgentsClient) -> None:
         """Get the image files from the message and kickoff download."""
         if message.image_contents:
             for index, image in enumerate(message.image_contents, start=0):
                 attachment_name = (
                     "unknown" if not message.file_path_annotations else message.file_path_annotations[index].text + ".png"
                 )
-                await self.get_file(project_client, image.image_file.file_id, attachment_name)
+                await self.get_file(agent_client, image.image_file.file_id, attachment_name)
         elif message.attachments:
             for index, attachment in enumerate(message.attachments, start=0):
                 attachment_name = (
                     "unknown" if not message.file_path_annotations else message.file_path_annotations[index].text
                 )
-                await self.get_file(project_client, attachment.file_id, attachment_name)
+                if attachment.file_id:
+                    await self.get_file(agent_client, attachment.file_id, attachment_name)
 
-    async def upload_file(self, agents_client: AgentsClient, file_path: Path, purpose: str = "assistants") -> None:
+    async def upload_file(self, agents_client: AgentsClient, file_path: Path, purpose: str = "assistants"):
         """Upload a file to the project."""
         self.log_msg_purple(f"Uploading file: {file_path}")
-        file_info = await agents_client.files.upload(file_path=file_path, purpose=purpose)
+        file_info = await agents_client.files.upload(file_path=str(file_path), purpose=purpose)
         self.log_msg_purple(f"File uploaded with ID: {file_info.id}")
         return file_info
 
     async def create_vector_store(
         self, agents_client: AgentsClient, files: list[str], vector_store_name: str
-    ) -> None:
+    ):
         """Upload a file to the project."""
 
         file_ids = []

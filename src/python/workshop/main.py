@@ -63,7 +63,7 @@ functions = AsyncFunctionTool(
 # INSTRUCTIONS_FILE = "instructions/code_interpreter_multilingual.txt"
 
 
-async def add_agent_tools() -> None:
+async def add_agent_tools():
     """Add tools for the agent."""
     font_file_info = None
 
@@ -94,10 +94,14 @@ async def add_agent_tools() -> None:
     return font_file_info
 
 
-async def initialize() -> tuple[Agent, AgentThread]:
+async def initialize() -> tuple[Agent | None, AgentThread | None]:
     """Initialize the agent with the sales data schema and instructions."""
 
     if not INSTRUCTIONS_FILE:
+        return None, None
+
+    if not API_DEPLOYMENT_NAME:
+        logger.error("MODEL_DEPLOYMENT_NAME environment variable is not set")
         return None, None
 
     font_file_info = await add_agent_tools()
@@ -138,6 +142,7 @@ async def initialize() -> tuple[Agent, AgentThread]:
     except Exception as e:
         logger.error("An error occurred initializing the agent: %s", str(e))
         logger.error("Please ensure you've enabled an instructions file.")
+        return None, None
 
 
 async def cleanup(agent: Agent, thread: AgentThread) -> None:
@@ -163,12 +168,12 @@ async def post_message(thread_id: str, content: str, agent: Agent, thread: Agent
             thread_id=thread.id,
             agent_id=agent.id,
             event_handler=StreamEventHandler(
-                functions=functions, project_client=agents_client, utilities=utilities),
+                functions=functions, agent_client=agents_client, utilities=utilities),
             max_completion_tokens=MAX_COMPLETION_TOKENS,
             max_prompt_tokens=MAX_PROMPT_TOKENS,
             temperature=TEMPERATURE,
             top_p=TOP_P,
-            instructions=agent.instructions,
+            # instructions=agent.instructions,
         ) as stream:
             await stream.until_done()
 

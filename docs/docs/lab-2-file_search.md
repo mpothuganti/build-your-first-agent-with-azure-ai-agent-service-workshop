@@ -26,7 +26,7 @@ A [vector store](https://en.wikipedia.org/wiki/Vector_database){:target="_blank"
         # INSTRUCTIONS_FILE = "instructions/file_search.txt"
 
         # vector_store = await utilities.create_vector_store(
-        #     project_client,
+        #     agent_client,
         #     files=[TENTS_DATA_SHEET_FILE],
         #     vector_name_name="Contoso Product Information Vector Store",
         # )
