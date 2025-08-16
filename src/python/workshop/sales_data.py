@@ -15,10 +15,8 @@ logger = logging.getLogger(__name__)
 
 
 class SalesData:
-    conn: Optional[aiosqlite.Connection]
-
     def __init__(self: "SalesData", utilities: Utilities) -> None:
-        self.conn = None
+        self.conn: Optional[aiosqlite.Connection] = None
         self.utilities = utilities
 
     async def connect(self: "SalesData") -> None:
@@ -36,14 +34,23 @@ class SalesData:
             await self.conn.close()
             logger.debug("Database connection closed.")
 
+    def _ensure_connection(self: "SalesData") -> None:
+        """Ensure that the database connection is established."""
+        if self.conn is None:
+            raise RuntimeError("Database connection is not established. Call connect() first.")
+
     async def _get_table_names(self: "SalesData") -> list:
         """Return a list of table names."""
+        self._ensure_connection()
+        assert self.conn is not None
         table_names = []
         async with self.conn.execute("SELECT name FROM sqlite_master WHERE type='table';") as tables:
             return [table[0] async for table in tables if table[0] != "sqlite_sequence"]
 
     async def _get_column_info(self: "SalesData", table_name: str) -> list:
         """Return a list of tuples containing column names and their types."""
+        self._ensure_connection()
+        assert self.conn is not None
         column_info = []
         async with self.conn.execute(f"PRAGMA table_info('{table_name}');") as columns:
             # col[1] is the column name, col[2] is the column type
@@ -51,30 +58,39 @@ class SalesData:
 
     async def _get_regions(self: "SalesData") -> list:
         """Return a list of unique regions in the database."""
+        self._ensure_connection()
+        assert self.conn is not None
         async with self.conn.execute("SELECT DISTINCT region FROM sales_data;") as regions:
             result = await regions.fetchall()
         return [region[0] for region in result]
 
     async def _get_product_types(self: "SalesData") -> list:
         """Return a list of unique product types in the database."""
+        self._ensure_connection()
+        assert self.conn is not None
         async with self.conn.execute("SELECT DISTINCT product_type FROM sales_data;") as product_types:
             result = await product_types.fetchall()
         return [product_type[0] for product_type in result]
 
     async def _get_product_categories(self: "SalesData") -> list:
         """Return a list of unique product categories in the database."""
+        self._ensure_connection()
+        assert self.conn is not None
         async with self.conn.execute("SELECT DISTINCT main_category FROM sales_data;") as product_categories:
             result = await product_categories.fetchall()
         return [product_category[0] for product_category in result]
 
     async def _get_reporting_years(self: "SalesData") -> list:
         """Return a list of unique reporting years in the database."""
+        self._ensure_connection()
+        assert self.conn is not None
         async with self.conn.execute("SELECT DISTINCT year FROM sales_data ORDER BY year;") as reporting_years:
             result = await reporting_years.fetchall()
         return [str(reporting_year[0]) for reporting_year in result]
 
     async def get_database_info(self: "SalesData") -> str:
         """Return a string containing the database schema information and common query fields."""
+        self._ensure_connection()
         table_dicts = []
         for table_name in await self._get_table_names():
             columns_names = await self._get_column_info(table_name)
@@ -114,6 +130,8 @@ class SalesData:
         print(f"{tc.BLUE}Executing query: {sqlite_query}{tc.RESET}\n")
 
         try:
+            self._ensure_connection()
+            assert self.conn is not None
             # Perform the query asynchronously
             async with self.conn.execute(sqlite_query) as cursor:
                 rows = await cursor.fetchall()
