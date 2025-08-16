@@ -46,7 +46,7 @@ A [vector store](https://en.wikipedia.org/wiki/Vector_database){:target="_blank"
         INSTRUCTIONS_FILE = "instructions/file_search.txt"
         # INSTRUCTIONS_FILE = "instructions/code_interpreter.txt"
         # INSTRUCTIONS_FILE = "instructions/code_interpreter_multilingual.txt"
-        # INSTRUCTIONS_FILE = "instructions/bing_grounding.txt"
+        
 
 
         async def add_agent_tools() -> None:

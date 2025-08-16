@@ -84,7 +84,7 @@ In this lab, you will enable the function logic to execute dynamic SQL queries a
         # INSTRUCTIONS_FILE = "instructions/file_search.txt"
         # INSTRUCTIONS_FILE = "instructions/code_interpreter.txt"
         # INSTRUCTIONS_FILE = "instructions/code_interpreter_multilingual.txt"
-        # INSTRUCTIONS_FILE = "instructions/bing_grounding.txt"
+        
 
 
         async def add_agent_tools() -> None:

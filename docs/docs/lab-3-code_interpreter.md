@@ -31,7 +31,7 @@ In this lab, you'll enable the Code Interpreter to execute Python code generated
         INSTRUCTIONS_FILE = "instructions/file_search.txt"
         INSTRUCTIONS_FILE = "instructions/code_interpreter.txt"
         # INSTRUCTIONS_FILE = "instructions/code_interpreter_multilingual.txt"
-        # INSTRUCTIONS_FILE = "instructions/bing_grounding.txt"
+        
 
 
         async def add_agent_tools() -> None:

@@ -58,7 +58,7 @@ For more information, visit the [Grounding with Bing Search](https://learn.micro
 1. **Uncomment** the following lines by removing the **"# "** characters
 
     ```python
-    # INSTRUCTIONS_FILE = "instructions/bing_grounding.txt"
+    
 
     # bing_grounding = BingGroundingTool(connection_id=AZURE_BING_CONNECTION_ID)
     # toolset.add(bing_grounding)
