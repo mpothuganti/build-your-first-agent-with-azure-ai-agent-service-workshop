@@ -84,10 +84,9 @@ The following resources will be created in the **rg-agent-workshop-****** resour
 
 - An **Azure AI Foundry hub** named **foundry-******
 - An **Azure AI Foundry project** named **project-******
-- A **Serverless (pay-as-you-go) GPT-4o model deployment** named **gpt-4o**. See pricing details [here](https://azure.microsoft.com/pricing/details/cognitive-services/openai-service/){:target="_blank"}.
-- A **Grounding with Bing Search** resource. See the [documentation](https://learn.microsoft.com/azure/ai-services/agents/how-to/tools/bing-grounding) and [pricing](https://www.microsoft.com/en-us/bing/apis/grounding-pricing){:target="_blank"} for details.
+- A **Serverless (pay-as-you-go) GPT-4o model deployment** named **gpt-4o-mini**. See pricing details [here](https://azure.microsoft.com/pricing/details/cognitive-services/openai-service/){:target="_blank"}.
 
-!!! warning "You will need 140K TPM quota availability for the gpt-4o Global Standard SKU, not because the agent uses lots of tokens, but due to the frequency of calls made by the agent to the model. Review your quota availability in the [AI Foundry Management Center](https://ai.azure.com/managementCenter/quota){:target="_blank"}."
+!!! warning "You will need 140K TPM quota availability for the gpt-4o-mini Global Standard SKU, not because the agent uses lots of tokens, but due to the frequency of calls made by the agent to the model. Review your quota availability in the [AI Foundry Management Center](https://ai.azure.com/managementCenter/quota){:target="_blank"}."
 
 We have provided a bash script to automate the deployment of the resources required for the workshop. Alternatively, you may deploy resources manually using Azure AI Foundry studio. Select the desired tab.
 
@@ -146,11 +145,11 @@ We have provided a bash script to automate the deployment of the resources requi
     3. From **My assets**, select **Models + endpoints**.
     4. Select **Deploy Model / Deploy Base Model**.
 
-           - Select **gpt-4o** from the model list, then select **Confirm**.
+           - Select **gpt-4o-mini** from the model list, then select **Confirm**.
            - Name the deployment
 
                ```text
-               gpt-4o
+               gpt-4o-mini
                ```
 
         - Deployment type: Select **Global Standard**.
@@ -197,7 +196,7 @@ We have provided a bash script to automate the deployment of the resources requi
         4. Run the following command to set the [ASP.NET Core safe secret](https://learn.microsoft.com/aspnet/core/security/app-secrets){:target="_blank"} for the model deployment name:
 
             ```bash
-            dotnet user-secrets set "Azure:ModelName" "gpt-4o" --project "$CSHARP_PROJECT_PATH"
+            dotnet user-secrets set "Azure:ModelName" "gpt-4o-mini" --project "$CSHARP_PROJECT_PATH"
             ```
 
         5. Add the **Bing connection ID** to the user secrets for grounding with Bing search.

@@ -17,7 +17,7 @@ param aiProjectDescription string = 'A standard project resource required for th
 param tags object = {}
 
 @description('Model name for deployment')
-param modelName string = 'gpt-4o'
+param modelName string = 'gpt-4o-mini'
 
 @description('Model format for deployment')
 param modelFormat string = 'OpenAI'

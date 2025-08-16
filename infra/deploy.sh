@@ -4,7 +4,7 @@ echo "Deploying the Azure resources..."
 
 # Define resource group parameters
 RG_LOCATION="eastus"
-MODEL_NAME="gpt-4o"
+MODEL_NAME="gpt-4o-mini"
 MODEL_VERSION="2024-11-20"
 AI_PROJECT_FRIENDLY_NAME="Agent Service Workshop"
 MODEL_CAPACITY=140

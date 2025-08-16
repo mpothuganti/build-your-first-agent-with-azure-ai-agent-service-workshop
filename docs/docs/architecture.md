@@ -8,7 +8,7 @@ In this workshop, you will create the Contoso Sales Agent: a conversational agen
 
     This agent is built on Microsoft Azure services.
 
-      - **Generative AI model**: The underlying LLM powering this app is the [Azure OpenAI gpt-4o](https://learn.microsoft.com/azure/ai-services/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions#gpt-4o-and-gpt-4-turbo){:target="_blank"} LLM.
+      - **Generative AI model**: The underlying LLM powering this app is the [Azure OpenAI gpt-4o-mini](https://learn.microsoft.com/azure/ai-services/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions#gpt-4o-mini-and-gpt-4-turbo){:target="_blank"} LLM.
 
       - **Vector Store**: We will provide the agent with product information as a PDF file to support its queries. The agent will use the "basic agent setup" of the [Foundry Agent Service file search tool](https://learn.microsoft.com/azure/ai-services/agents/how-to/tools/file-search?tabs=python&pivots=overview){:target="_blank"} to find relevant portions of the document with vector search and provide them to the agent as context.
 

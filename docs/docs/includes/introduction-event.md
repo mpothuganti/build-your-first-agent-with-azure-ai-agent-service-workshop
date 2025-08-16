@@ -180,7 +180,7 @@ Next, we log in to Azure AI Foundry to retrieve the project endpoint, which the 
     3. Add the **Model deployment name** to the user secrets.
 
         ```powershell
-        dotnet user-secrets set "Azure:ModelName" "gpt-4o"
+        dotnet user-secrets set "Azure:ModelName" "gpt-4o-mini"
         ```
 
     4. Add the **Bing connection ID** to the user secrets for grounding with Bing search.
