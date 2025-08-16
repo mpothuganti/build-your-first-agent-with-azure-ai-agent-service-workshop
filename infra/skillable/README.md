@@ -9,11 +9,11 @@ This repository contains Azure infrastructure templates for deploying AI Foundry
 
 ## Configuration
 
-**First, generate a random 4-character suffix:**
+**First, generate a random 6-character suffix:**
 
 ```powershell
 $chars = 'abcdefghijklmnopqrstuvwxyz0123456789'
-$UNIQUE_SUFFIX = -join ((1..4) | ForEach { $chars[(Get-Random -Maximum $chars.Length)] })
+$UNIQUE_SUFFIX = -join ((1..6) | ForEach { $chars[(Get-Random -Maximum $chars.Length)] })
 Write-Host "Your unique suffix: $UNIQUE_SUFFIX"
 ```
 
@@ -21,7 +21,8 @@ Write-Host "Your unique suffix: $UNIQUE_SUFFIX"
 
 The following parameters are passed directly on the command line:
 
-- **uniqueSuffix**: Unique 4-character identifier (use the generated `$UNIQUE_SUFFIX` variable)
+- **location**: Azure region for deployment (e.g., "westus")
+- **uniqueSuffix**: Unique 6-character identifier (use the generated `$UNIQUE_SUFFIX` variable)
 
 ## Deployment Steps
 

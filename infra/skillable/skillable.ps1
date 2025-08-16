@@ -6,7 +6,7 @@ $MODEL_NAME = "gpt-4o-mini"  # Updated to match the default model in Bicep templ
 
 # Generate a unique suffix
 $chars = 'abcdefghijklmnopqrstuvwxyz0123456789'
-$UNIQUE_SUFFIX = -join ((1..4) | ForEach { $chars[(Get-Random -Maximum $chars.Length)] })
+$UNIQUE_SUFFIX = -join ((1..6) | ForEach { $chars[(Get-Random -Maximum $chars.Length)] })
 Write-Host "Your unique suffix: $UNIQUE_SUFFIX"
 
 # Deploy the Azure resources and save output to JSON
