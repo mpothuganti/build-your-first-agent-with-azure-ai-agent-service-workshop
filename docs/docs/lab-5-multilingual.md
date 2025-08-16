@@ -53,7 +53,6 @@ Once the task is complete, the pie chart image will be saved in the **shared/fil
         INSTRUCTIONS_FILE = "instructions/function_calling.txt"
         INSTRUCTIONS_FILE = "instructions/file_search.txt"
         INSTRUCTIONS_FILE = "instructions/code_interpreter.txt"
-        INSTRUCTIONS_FILE = "instructions/bing_grounding.txt"
         INSTRUCTIONS_FILE = "instructions/code_interpreter_multilingual.txt"
 
 
@@ -76,10 +75,6 @@ Once the task is complete, the pie chart image will be saved in the **shared/fil
             # Add the code interpreter tool
             code_interpreter = CodeInterpreterTool()
             toolset.add(code_interpreter)
-
-            # Add the Bing grounding tool
-            bing_grounding = BingGroundingTool(connection_id=AZURE_BING_CONNECTION_ID)
-            toolset.add(bing_grounding)
 
             # Add multilingual support to the code interpreter
             font_file_info = await utilities.upload_file(agents_client, utilities.shared_files_path / FONTS_ZIP)

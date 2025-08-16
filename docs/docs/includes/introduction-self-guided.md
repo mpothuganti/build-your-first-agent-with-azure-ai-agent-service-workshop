@@ -110,8 +110,7 @@ We have provided a bash script to automate the deployment of the resources requi
         You'll see this file when you open the Python workspace in VS Code. Your **.env** file will look similar to this but with your project endpoint.
 
         ```python
-        MODEL_DEPLOYMENT_NAME="gpt-4o"
-        AZURE_BING_CONNECTION_ID=""
+        MODEL_DEPLOYMENT_NAME="gpt-4o-mini"
         PROJECT_ENDPOINT="<your_project_endpoint>"
         ```
     === "C#"
