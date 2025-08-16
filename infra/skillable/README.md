@@ -29,7 +29,7 @@ The following parameters are passed directly on the command line:
 ### 1. Create Resource Group
 
 ```powershell
-az group create --name "rg-contoso-agent-wks-$UNIQUE_SUFFIX" --location "West US"
+az group create --name "rg-contoso-agent-workshop-$UNIQUE_SUFFIX" --location "West US"
 ```
 
 ### 2. Deploy Infrastructure
