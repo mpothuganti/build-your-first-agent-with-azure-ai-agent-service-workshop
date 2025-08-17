@@ -36,7 +36,7 @@ az group create --name "rg-contoso-agent-workshop-$UNIQUE_SUFFIX" --location "We
 
 ```powershell
 az deployment group create `
-  --resource-group "rg-contoso-agent-wks-$UNIQUE_SUFFIX" `
+  --resource-group "rg-contoso-agent-workshop-$UNIQUE_SUFFIX" `
   --template-file skillable.bicep `
   --parameters uniqueSuffix="$UNIQUE_SUFFIX"
 ```
