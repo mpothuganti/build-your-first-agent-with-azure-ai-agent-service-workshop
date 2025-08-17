@@ -55,18 +55,14 @@ MODEL_DEPLOYMENT_NAME=$MODEL_NAME
 "@ | Set-Content -Path $ENV_FILE_PATH
 
 # Set the C# project path
-$CSHARP_PROJECT_PATH = "$env:USERPROFILE/AgentWorkshop.Client.csproj"
+# $CSHARP_PROJECT_PATH = "$env:USERPROFILE\Desktop\AgentWorkshopCSharp"
 
-# Check if the directory exists, if not create it
-$PROJECT_DIR = Split-Path $CSHARP_PROJECT_PATH -Parent
-if (-not (Test-Path $PROJECT_DIR)) {
-    Write-Host "Creating directory: $PROJECT_DIR"
-    New-Item -ItemType Directory -Path $PROJECT_DIR -Force
-}
+# Write-Host "Creating directory: $CSHARP_PROJECT_PATH"
+# New-Item -ItemType Directory -Path $CSHARP_PROJECT_PATH -Force
 
-# Set the user secrets for the C# project
-dotnet user-secrets set "ConnectionStrings:AiAgentService" "$projectsEndpoint" --project "$CSHARP_PROJECT_PATH"
-dotnet user-secrets set "Azure:ModelName" "$MODEL_NAME" --project "$CSHARP_PROJECT_PATH"
+# # Set the user secrets for the C# project
+# dotnet user-secrets set "ConnectionStrings:AiAgentService" "$projectsEndpoint" --project "$CSHARP_PROJECT_PATH"
+# dotnet user-secrets set "Azure:ModelName" "$MODEL_NAME" --project "$CSHARP_PROJECT_PATH"
 
 # Delete the output.json file
 Remove-Item -Path output.json -Force
