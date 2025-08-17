@@ -9,13 +9,15 @@ $chars = 'abcdefghijklmnopqrstuvwxyz0123456789'
 $UNIQUE_SUFFIX = -join ((1..6) | ForEach { $chars[(Get-Random -Maximum $chars.Length)] })
 Write-Host "Your unique suffix: $UNIQUE_SUFFIX"
 
+Write-Host "Creating resource group: rg-contoso-agent-workshop-$UNIQUE_SUFFIX in $RG_LOCATION"
+az group create --name "rg-contoso-agent-workshop-$UNIQUE_SUFFIX" --location "West US"
+
 # Deploy the Azure resources and save output to JSON
-az deployment sub create `
-  --location "$RG_LOCATION" `
+
+az deployment group create `
+  --resource-group "rg-contoso-agent-workshop-$UNIQUE_SUFFIX" `
   --template-file skillable.bicep `
-  --parameters `
-      location="$RG_LOCATION" `
-      uniqueSuffix="$UNIQUE_SUFFIX" | Out-File -FilePath output.json -Encoding utf8
+  --parameters uniqueSuffix="$UNIQUE_SUFFIX" | Out-File -FilePath output.json -Encoding utf8
 
 # Parse the JSON file using native PowerShell cmdlets
 if (-not (Test-Path -Path output.json)) {
@@ -54,6 +56,13 @@ MODEL_DEPLOYMENT_NAME=$MODEL_NAME
 
 # Set the C# project path
 $CSHARP_PROJECT_PATH = "$env:USERPROFILE/AgentWorkshop.Client.csproj"
+
+# Check if the directory exists, if not create it
+$PROJECT_DIR = Split-Path $CSHARP_PROJECT_PATH -Parent
+if (-not (Test-Path $PROJECT_DIR)) {
+    Write-Host "Creating directory: $PROJECT_DIR"
+    New-Item -ItemType Directory -Path $PROJECT_DIR -Force
+}
 
 # Set the user secrets for the C# project
 dotnet user-secrets set "ConnectionStrings:AiAgentService" "$projectsEndpoint" --project "$CSHARP_PROJECT_PATH"
