@@ -1,5 +1,7 @@
 # Deploy to Azure
 
+
+
 This repository contains Azure infrastructure templates for deploying AI Foundry services.
 
 ## Prerequisites
@@ -34,6 +36,22 @@ az group create --name "rg-contoso-agent-workshop-$UNIQUE_SUFFIX" --location "We
 
 ### 2. Deploy Infrastructure
 
+### ARM Deployment
+
+Form the command line, change to the ARM folder.
+
+Run the following command to deploy the ARM template:
+
+```powershell
+az deployment group create `
+  --name contoso-agent-deployment-v2 `
+  --resource-group "rg-contoso-agent-workshop-$UNIQUE_SUFFIX" `
+  --template-file template.json `
+  --parameters foundry_name="fdy-contoso-agent-$UNIQUE_SUFFIX" project_name="prj-contoso-agent-$UNIQUE_SUFFIX"
+```
+
+### Bicep Deployment
+
 ```powershell
 az deployment group create `
   --resource-group "rg-contoso-agent-workshop-$UNIQUE_SUFFIX" `
@@ -41,7 +59,7 @@ az deployment group create `
   --parameters uniqueSuffix="$UNIQUE_SUFFIX"
 ```
 
-## Infrastructure Components
+### Infrastructure Components
 
 The `skillable.bicep` template deploys:
 

@@ -20,9 +20,13 @@ list_deleted_resources() {
     echo
     
     # Display the accounts in a nice table format
+    printf "%-30s %-20s %-30s\n" "Name" "Location" "ResourceGroup"
+    printf "%-30s %-20s %-30s\n" "----" "--------" "-------------"
     az cognitiveservices account list-deleted --output json | \
         jq -r '.[] | "\(.name)\t\(.location)\t\(.id | split("/")[8])"' | \
-        column -t -s $'\t' -N "Name,Location,ResourceGroup"
+        while IFS=$'\t' read -r name location resource_group; do
+            printf "%-30s %-20s %-30s\n" "$name" "$location" "$resource_group"
+        done
     
     return 0
 }

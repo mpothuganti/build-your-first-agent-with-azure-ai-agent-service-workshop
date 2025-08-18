@@ -1,0 +1,106 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "foundry_name": {
+            "defaultValue": null,
+            "type": "String"
+        },
+        "project_name": {
+            "type": "String",
+            "defaultValue": null
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.CognitiveServices/accounts",
+            "apiVersion": "2025-06-01",
+            "name": "[parameters('foundry_name')]",
+            "location": "westus",
+            "tags": {
+                "source": "Azure AI Foundry Agents Service lab"
+            },
+            "sku": {
+                "name": "S0"
+            },
+            "kind": "AIServices",
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "apiProperties": {},
+                "customSubDomainName": "[parameters('foundry_name')]",
+                "networkAcls": {
+                    "defaultAction": "Allow",
+                    "virtualNetworkRules": [],
+                    "ipRules": []
+                },
+                "allowProjectManagement": true,
+                "defaultProject": "[parameters('project_name')]",
+                "associatedProjects": [
+                    "[parameters('project_name')]"
+                ],
+                "publicNetworkAccess": "Enabled",
+                "disableLocalAuth": true
+            }
+        },
+        {
+            "type": "Microsoft.CognitiveServices/accounts/defenderForAISettings",
+            "apiVersion": "2025-06-01",
+            "name": "[concat(parameters('foundry_name'), '/Default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.CognitiveServices/accounts', parameters('foundry_name'))]"
+            ],
+            "properties": {
+                "state": "Disabled"
+            }
+        },
+        {
+            "type": "Microsoft.CognitiveServices/accounts/deployments",
+            "apiVersion": "2025-06-01",
+            "name": "[concat(parameters('foundry_name'), '/gpt-4o-mini')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.CognitiveServices/accounts', parameters('foundry_name'))]",
+                "[resourceId('Microsoft.CognitiveServices/accounts/projects', parameters('foundry_name'), parameters('project_name'))]"
+            ],
+            "tags": {
+                "source": "Azure AI Foundry Agents Service lab"
+            },
+            "sku": {
+                "name": "GlobalStandard",
+                "capacity": 140
+            },
+            "properties": {
+                "model": {
+                    "format": "OpenAI",
+                    "name": "gpt-4o-mini",
+                    "version": "2024-07-18"
+                },
+                "versionUpgradeOption": "OnceNewDefaultVersionAvailable",
+                "currentCapacity": 140
+            }
+        },
+        {
+            "type": "Microsoft.CognitiveServices/accounts/projects",
+            "apiVersion": "2025-06-01",
+            "name": "[concat(parameters('foundry_name'), '/', parameters('project_name'))]",
+            "location": "westus",
+            "dependsOn": [
+                "[resourceId('Microsoft.CognitiveServices/accounts', parameters('foundry_name'))]",
+                "[resourceId('Microsoft.CognitiveServices/accounts/defenderForAISettings', parameters('foundry_name'), 'Default')]"
+            ],
+            "tags": {
+                "source": "Azure AI Foundry Agents Service lab"
+            },
+            "kind": "AIServices",
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "description": "Project resources required for the Contoso Agent Workshop.",
+                "displayName": "Contoso Agent Service Project"
+            }
+        }
+    ]
+}
