@@ -110,7 +110,7 @@ Try these questions:
         3. Using the returned data, the LLM writes Python code to create a Pie Chart.
         4. Finally, the Code Interpreter executes the Python code to generate the chart.
 
-2. **Download as JSON**
+2. **Download as CSV file**
 
     Once the task is complete, check the **shared/files** folder to see the downloaded file.
 
