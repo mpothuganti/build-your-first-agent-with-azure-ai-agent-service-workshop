@@ -57,7 +57,7 @@ async def add_agent_tools():
     # Add the tents data sheet to a new vector data store
     # vector_store = await utilities.create_vector_store(
     #     agents_client,
-    #     files=[TENTS_DATA_SHEET_FILE],
+    #     files=[Config.TENTS_DATA_SHEET_FILE],
     #     vector_store_name="Contoso Product Information Vector Store",
     # )
     # file_search_tool = FileSearchTool(vector_store_ids=[vector_store.id])
