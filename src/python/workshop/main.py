@@ -68,7 +68,7 @@ async def add_agent_tools():
     # toolset.add(code_interpreter)
 
     # Add multilingual support to the code interpreter
-    # font_file_info = await utilities.upload_file(agents_client, utilities.shared_files_path / FONTS_ZIP)
+    # font_file_info = await utilities.upload_file(agents_client, utilities.shared_files_path / Config.FONTS_ZIP)
     # code_interpreter.add_file(file_id=font_file_info.id)
 
     return font_file_info
