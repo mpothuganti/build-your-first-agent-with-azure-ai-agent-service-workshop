@@ -9,6 +9,7 @@ class Config:
     
     AGENT_NAME = "Contoso Sales Agent"
     TENTS_DATA_SHEET_FILE = "datasheet/contoso-tents-datasheet.pdf"
+    INSTANCE_DATA_SHEET_FILE = "datasheet/AzureResourceGraphResults-Query.txt"
     FONTS_ZIP = "fonts/fonts.zip"
     API_DEPLOYMENT_NAME = os.getenv("MODEL_DEPLOYMENT_NAME")
     PROJECT_ENDPOINT = os.environ["PROJECT_ENDPOINT"]

@@ -15,6 +15,7 @@ from azure.identity.aio import DefaultAzureCredential
 
 from config import Config
 from sales_data import SalesData
+from cpumetrics import CpuMetrics
 from stream_event_handler import StreamEventHandler
 from terminal_colors import TerminalColors as tc
 from utilities import Utilities
@@ -38,9 +39,12 @@ agents_client = AgentsClient(
 functions = AsyncFunctionTool(
     {
         sales_data.async_fetch_sales_data_using_sqlite_query,
+        CpuMetrics.get_cpu_usage,
     }
 )
 
+INSTRUCTIONS_FILE = "instructions/function_calling_hackathon.txt"
+#INSTRUCTIONS_FILE1 = "instructions/file_search_hackathon.txt"
 # INSTRUCTIONS_FILE = "instructions/function_calling.txt"
 # INSTRUCTIONS_FILE = "instructions/file_search.txt"
 # INSTRUCTIONS_FILE = "instructions/code_interpreter.txt"
@@ -52,16 +56,16 @@ async def add_agent_tools():
     font_file_info = None
 
     # Add the functions tool
-    # toolset.add(functions)
+    toolset.add(functions)
 
     # Add the tents data sheet to a new vector data store
-    # vector_store = await utilities.create_vector_store(
-    #     agents_client,
-    #     files=[Config.TENTS_DATA_SHEET_FILE],
-    #     vector_store_name="Contoso Product Information Vector Store",
-    # )
-    # file_search_tool = FileSearchTool(vector_store_ids=[vector_store.id])
-    # toolset.add(file_search_tool)
+    vector_store = await utilities.create_vector_store(
+        agents_client,
+        files=[Config.INSTANCE_DATA_SHEET_FILE],
+        vector_store_name="search_instance_metadata_vector_store",
+    )
+    file_search_tool = FileSearchTool(vector_store_ids=[vector_store.id])
+    toolset.add(file_search_tool)
 
     # Add the code interpreter tool
     # code_interpreter = CodeInterpreterTool()
