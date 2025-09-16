@@ -16,6 +16,7 @@ from azure.identity.aio import DefaultAzureCredential
 from config import Config
 from sales_data import SalesData
 from cpumetrics import CpuMetrics
+from ec2instancelist import Ec2InstanceList
 from stream_event_handler import StreamEventHandler
 from terminal_colors import TerminalColors as tc
 from utilities import Utilities
@@ -36,12 +37,14 @@ agents_client = AgentsClient(
     endpoint=Config.PROJECT_ENDPOINT,
 )
 
-functions = AsyncFunctionTool(
-    {
-        sales_data.async_fetch_sales_data_using_sqlite_query,
-        CpuMetrics.get_cpu_usage,
-    }
-)
+ec2_instance_list = Ec2InstanceList()
+
+
+functions = AsyncFunctionTool({
+    sales_data.async_fetch_sales_data_using_sqlite_query,
+    CpuMetrics.get_cpu_usage,
+    ec2_instance_list.get_ec2_instance_inventory
+})
 
 INSTRUCTIONS_FILE = "instructions/function_calling_hackathon.txt"
 #INSTRUCTIONS_FILE1 = "instructions/file_search_hackathon.txt"
@@ -59,13 +62,13 @@ async def add_agent_tools():
     toolset.add(functions)
 
     # Add the tents data sheet to a new vector data store
-    vector_store = await utilities.create_vector_store(
-        agents_client,
-        files=[Config.INSTANCE_DATA_SHEET_FILE],
-        vector_store_name="search_instance_metadata_vector_store",
-    )
-    file_search_tool = FileSearchTool(vector_store_ids=[vector_store.id])
-    toolset.add(file_search_tool)
+    # vector_store = await utilities.create_vector_store(
+    #     agents_client,
+    #     files=[Config.INSTANCE_DATA_SHEET_FILE],
+    #     vector_store_name="search_instance_metadata_vector_store",
+    # )
+    # file_search_tool = FileSearchTool(vector_store_ids=[vector_store.id])
+    # toolset.add(file_search_tool)
 
     # Add the code interpreter tool
     # code_interpreter = CodeInterpreterTool()
