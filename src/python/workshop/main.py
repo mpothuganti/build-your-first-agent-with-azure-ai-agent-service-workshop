@@ -62,13 +62,13 @@ async def add_agent_tools():
     toolset.add(functions)
 
     # Add the tents data sheet to a new vector data store
-    vector_store = await utilities.create_vector_store(
-        agents_client,
-        files=[Config.INSTANCE_DATA_SHEET_FILE],
-        vector_store_name="search_instance_metadata_vector_store",
-    )
-    file_search_tool = FileSearchTool(vector_store_ids=[vector_store.id])
-    toolset.add(file_search_tool)
+    # vector_store = await utilities.create_vector_store(
+    #     agents_client,
+    #     files=[Config.INSTANCE_DATA_SHEET_FILE],
+    #     vector_store_name="search_instance_metadata_vector_store",
+    # )
+    # file_search_tool = FileSearchTool(vector_store_ids=[vector_store.id])
+    # toolset.add(file_search_tool)
 
     # Add the code interpreter tool
     # code_interpreter = CodeInterpreterTool()
