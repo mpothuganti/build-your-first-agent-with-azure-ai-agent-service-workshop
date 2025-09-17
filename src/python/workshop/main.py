@@ -14,6 +14,7 @@ from azure.identity.aio import DefaultAzureCredential
 
 
 from config import Config
+from pricing import InstancePricing, get_instance_price
 from sales_data import SalesData
 from cpumetrics import CpuMetrics
 from ec2instancelist import Ec2InstanceList
@@ -43,7 +44,8 @@ ec2_instance_list = Ec2InstanceList()
 functions = AsyncFunctionTool({
     sales_data.async_fetch_sales_data_using_sqlite_query,
     CpuMetrics.get_cpu_usage,
-    ec2_instance_list.get_ec2_instance_inventory
+    ec2_instance_list.get_ec2_instance_inventory,
+    get_instance_price,
 })
 
 INSTRUCTIONS_FILE = "instructions/function_calling_hackathon.txt"
