@@ -14,6 +14,7 @@ from azure.identity.aio import DefaultAzureCredential
 
 
 from config import Config
+from pricing import InstancePricing, get_instance_price
 from sales_data import SalesData
 from cpumetrics import CpuMetrics
 from stream_event_handler import StreamEventHandler
@@ -40,6 +41,7 @@ functions = AsyncFunctionTool(
     {
         sales_data.async_fetch_sales_data_using_sqlite_query,
         CpuMetrics.get_cpu_usage,
+        get_instance_price,
     }
 )
 
