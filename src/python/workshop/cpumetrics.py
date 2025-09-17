@@ -20,7 +20,7 @@ class CpuMetrics:
         :return: JSON string: { "instance_id": ..., "avg_cpu": ..., "period_hours": ... }
         :rtype: str
         """
-        cw = boto3.client("cloudwatch", aws_access_key_id= "", aws_secret_access_key="", region_name=region)
+        cw = boto3.client("cloudwatch", region_name=region)
         end_time = datetime.now(timezone.utc)
         start_time = end_time - timedelta(hours=period_hours)
 

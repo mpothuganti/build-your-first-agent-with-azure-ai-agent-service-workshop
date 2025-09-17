@@ -5,9 +5,9 @@ load_dotenv()
 
 
 class Config:
-    """Configuration class for the Contoso Sales Agent."""
-    
-    AGENT_NAME = "Contoso Sales Agent"
+    """Configuration class for the AWS Cost Advisor Agent."""
+
+    AGENT_NAME = "AWS Cost Advisor Agent"
     TENTS_DATA_SHEET_FILE = "datasheet/contoso-tents-datasheet.pdf"
     INSTANCE_DATA_SHEET_FILE = "datasheet/AzureResourceGraphResults-Query.txt"
     FONTS_ZIP = "fonts/fonts.zip"
