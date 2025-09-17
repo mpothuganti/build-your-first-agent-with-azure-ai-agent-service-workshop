@@ -12,10 +12,12 @@ class Ec2InstanceList:
         self.client = ResourceGraphClient(self.credential)
 
     def get_ec2_instance_inventory(self, 
+                                   connectorName: str,
                                    subscriptions: Optional[List[str]] = ["1c70e365-4937-4ff9-8524-262064a268d8"]) -> str:
         """
         Fetch all EC2 instance inventory using Azure Resource Graph query.
 
+        : param connectorName: The name of the AWS connector resource in Azure.
         :param subscriptions: List of Azure subscription IDs to query
         :return: JSON string of EC2 instance inventory
         :rtype: str
@@ -23,6 +25,7 @@ class Ec2InstanceList:
         query = (
             "awsresources "
             "| where type == 'microsoft.awsconnector/ec2instances' "
+            "| where properties.publicCloudConnectorsResourceId contains '" + connectorName + "' "
             "| where resourceGroup contains '730335494975' "
             "| project instanceId=properties.awsProperties.instanceId, "
             "instanceType=properties.awsProperties.instanceType.value, "

@@ -59,6 +59,7 @@ Always balance cost optimization with performance needs, considering workload pa
     - **Tool:** `get_ec2_instance_inventory`
     -  **Purpose:** Returns a list of all EC2 instances discovered in the connected AWS account(s).
     - Use this tool to answer questions about available EC2 instances, their IDs, and metadata.
+    - **Important:** You must always provide the `connectorName` parameter when calling this function. The function cannot retrieve instance inventory without a valid connector name. Ask customer to provide connector name.
 
 ### c. EC2 pricing tool
 - Use the **AWS Pricing Calculator API** to get accurate cost data:
